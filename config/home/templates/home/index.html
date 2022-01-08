@@ -1,0 +1,138 @@
+{% include "layout/nav.html" %}
+{% load static %}
+
+<style>
+    h1, h2, h3, h4, h5, h6 {
+        font-weight:bold;
+        color: #5b5b5b;
+    }
+    p {
+        font-weight:bold;
+        color: #5b5b5b;
+    }
+    #card {
+        box-shadow: 0  5px 5px rgba(0,0,0,0.2);
+    }
+
+    #error {
+        color: black;
+    }
+    
+</style>
+<div class="p-5 text-white text-center" style="background: rgb(5,121,254);background: linear-gradient(76deg, rgba(5,121,254,1) 0%, rgba(15,126,182,1) 86%, rgba(0,118,245,1) 100%);">
+        <p id="error">{{ error }}</p>
+        <div class="input-group mb-3" style="box-shadow: 0px 8px 24px rgba(0,0,0,.2);">
+            <button  class="btn btn-dark" type="button" id="location-bttn">
+                {% comment %} <span class="spinner-border spinner-border-sm"></span> {% endcomment %}
+                Use Current Location
+            </button>
+                <input id="city" type="text" class="form-control" placeholder="City" required>
+                <input id="state" type="text" class="form-control" placeholder="State (US only)" pattern="[a-zA-Z]{2}">
+                <input id="ctry" type="text" class="form-control" placeholder="Country" pattern="[a-zA-Z]{2}">
+            <button id="go" class="btn btn-success" type="submit">Go</button>
+        </div>
+</div>
+
+<div class="container my-5">
+    {% if exists%}
+        <div class="row">
+        {% for card in data %}
+            <div class="col-md-6 col-lg-2">
+            <div id="card" class="card align-items-center mb-2 mx-1 p-3">
+            <a href="/weather/current/?id={{card.city_id}}"><img class="card-img-top" width="50" height="50"  src="{% static 'images/'|add:card.icon %}" ></a>
+            <div id="row" class="card-body text-center ]">
+            <h6 id="row" class="card-title" style="border-top:1px solid #5b5b5b; padding-top: 10px">{{ card.city }}</h6>
+            <h6 id="row" class="card-title" >{{ card.country }}</h6>
+            <p id="row" style="border-top:1px solid #5b5b5b">{{ card.weather }}</p>
+            <p id="row">{{ card.temp }}˚f</p>
+            <img id="row" class="card-img-top" width="25" height="25"  src="{% static 'images/sunrise.svg'%}" ><p>{{ card.sunrise }}</p>
+            <img id="row" class="card-img-top" width="25" height="25"  src="{% static 'images/sunset.svg'%}" ><p>{{ card.sunset }}</p>
+            </div>
+            </div> 
+            </div>
+        {% endfor %}
+        </div>
+    {% else %}
+        No favorites.
+    {% endif %}
+</div>
+
+{% comment %} <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script> {% endcomment %}
+<script type="text/javascript">
+
+    function getLocation() {
+
+        disableButton()
+
+        city = document.querySelector("#city");
+        state = document.querySelector("#state");
+        ctry = document.querySelector("#ctry");
+
+        if (city.value) {
+            reference = 'weather/current/?city=' + city.value;
+            if (state.value) {
+                reference = reference + "&state=" + state.value;
+            }
+            if (ctry.value) {
+                    reference = reference + "&ctry=" + ctry.value;
+            }
+            window.location.href = reference;
+        } else {
+            window.location.href = '/?error=true';
+        }
+    }
+
+    function disableButton() {
+        attribute = document.createAttribute('disabled');
+        document.querySelector("#ctry").setAttributeNode(attribute)
+        attribute = document.createAttribute('disabled');
+        document.querySelector("#city").setAttributeNode(attribute)
+        attribute = document.createAttribute('disabled');
+        document.querySelector("#state").setAttributeNode(attribute)
+        bttn = document.querySelector('#go');
+        bttn2 = document.querySelector('#location-bttn');
+        bttn.innerHTML = "<span class='spinner-border spinner-border-sm'></span>";
+        bttn2.disabled = true;
+        bttn.disabled = true;
+    }
+    function getCurrentLocation()
+    {
+        attribute = document.createAttribute('disabled');
+        document.querySelector("#ctry").setAttributeNode(attribute)
+        attribute = document.createAttribute('disabled');
+        document.querySelector("#city").setAttributeNode(attribute)
+        attribute = document.createAttribute('disabled');
+        document.querySelector("#state").setAttributeNode(attribute)
+        bttn = document.querySelector('#location-bttn');
+        bttn2 = document.querySelector('#go');
+        bttn.innerHTML = "<span class='spinner-border spinner-border-sm'></span>";
+        bttn2.disabled = true;
+        bttn.disabled = true;
+        function success(position) {
+            const latitude  = position.coords.latitude;
+            const longitude = position.coords.longitude;
+            window.location.href = 'weather/current/?lat=' + latitude + "&long=" + longitude;
+            return false;
+        }
+
+        function error() {
+            status.textContent = 'Unable to retrieve your location';
+        }
+
+        if (navigator.geolocation)
+        {
+            navigator.geolocation.getCurrentPosition(success, error);
+        }
+
+    }
+
+
+    bttn = document.querySelector('#location-bttn');
+    btt2 = document.querySelector('#go');
+
+    btt2.addEventListener("click", getLocation);
+    bttn.addEventListener('click', getCurrentLocation);
+
+</script>
+
+{% include "layout/footer.html" %}

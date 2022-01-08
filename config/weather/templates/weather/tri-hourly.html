@@ -1,0 +1,108 @@
+{% include "layout/nav.html" %}
+
+<div class="container-fluid text-center">
+  <div class="row">
+    <div class="col" id="current"><a  class="nav-link" id="current-text" href="/weather/current/?id={{ id }}">current</a></div>
+    <div class="col" id="daily"><a class="nav-link" id="daily-text" href="/weather/tri-hourly/?id={{ id }}">tri-hourly</a></div>
+  </div>
+</div>
+
+{% load static %}
+
+<style>
+    #daily {
+        box-shadow: 0 0 10px 5px rgba(0,0,0,0.2);
+        clip-path: inset(0px -15px 0px -15px);
+    }
+    #daily-text {
+        color: #5b5b5b;
+    }
+
+    #current, #hourly {
+        box-shadow: 0  5px 5px rgba(0,0,0,0.2);
+        background: #5b5b5b;
+    }
+    #current-text, #hourly-text {
+        color: #ebebeb;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+        font-weight:bold;
+        color: #5b5b5b;
+    }
+
+    p {
+        font-weight:bold;
+        color: #5b5b5b;
+    }
+
+    #card {
+        box-shadow: 0  5px 5px rgba(0,0,0,0.2);
+    }
+
+    h6 {
+        margin-top: 15px;
+        border-top: 1px solid #5b5b5b;
+        padding-top: 10px;
+    }
+
+
+</style>
+<h3 class="col text-center mt-5">{{ city }}, {{ country }} <button type="button" class="btn btn-primary btn-sm" id="favorite">Favorite</button></h3>
+<div class="container">
+    <div class="row">
+        {% for d in data %}
+        <div class="col-md-4 col-lg-2">
+        <div id="card" class="card m-2">
+            <div class="card-thumbnail pt-2">
+                <img class="card-img-top" width="50" height="50"  src="{% static 'images/'|add:d.icon %}" >
+            </div>
+            <div class="card-body text-center">
+                <h6 class="card-title">{{ d.day }}</h6>
+                <h6 class="card-title">{{ d.time }}</h6>
+                <h6>{{ d.weather }}</h6>
+                <h6>{{ d.temp }}˚f</h6>
+            </div> 
+        </div>
+        </div>
+        {% endfor %}
+    </div>
+
+</div>
+
+<script>
+    let fav = document.querySelector("#favorite");
+    console.log('id' + "{{ id }}" + "=" + "{{ id }}");
+    if (document.cookie.indexOf('id' + "{{ id }}" + "=" + "{{ id }}") > -1) {
+        fav.innerHTML = "Un-favorite";
+    } else {
+        fav.innerHTML = "Favorite";
+    }
+
+    function eraseCookie(name) {   
+        document.cookie = name + '=; Max-Age=0; path=/; domain=' + location.hostname;  
+    }
+
+    function favorite() {
+        let fav = document.querySelector("#favorite");
+        if (fav.innerHTML === "Favorite") {
+            let curr = new Date();
+            let id = "{{ id }}"
+            curr.setMonth( curr.getMonth() + 1);
+            document.cookie = "id" + id + "=" + id + "; expires=" + curr.toUTCString() + "; path=/";
+            fav.innerHTML = "Un-favorite"
+            console.log("success");
+        } else {
+            let curr = new Date();
+            let id = "{{ id }}";
+            eraseCookie('id' + "{{ id }}" + "=" + "{{ id }}");
+            fav.innerHTML = "Favorite";
+            console.log("removed");
+        }
+    }
+
+    document.querySelector("#favorite").addEventListener("click", favorite);
+
+</script>
+
+{% include "layout/footer.html" %}

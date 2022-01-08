@@ -1,0 +1,135 @@
+{% include "layout/nav.html" %}
+
+<div class="container-fluid text-center">
+  <div class="row">
+    <div class="col" id="current"><a  class="nav-link" id="current-text" href="/weather/current/?id={{ data.id }}">current</a></div>
+    <div class="col" id="daily"><a class="nav-link" id="daily-text" href="/weather/tri-hourly/?id={{ data.id }}">tri-hourly</a></div>
+  </div>
+</div>
+
+{% load static %}
+
+<style>
+    #current {
+        box-shadow: 0 0 10px 5px rgba(0,0,0,0.2);
+        clip-path: inset(0px -15px 0px -15px);
+    }
+    #current-text {
+        color: #5b5b5b;
+    }
+
+    #daily, #hourly {
+        box-shadow: 0  5px 5px rgba(0,0,0,0.2);
+        background: #5b5b5b;
+    }
+    #daily-text, #hourly-text {
+        color: #ebebeb;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+        font-weight:bold;
+        color: #5b5b5b;
+    }
+
+    #weather {
+        box-shadow: 0  5px 5px rgba(0,0,0,0.2);
+    }
+
+</style>
+<h3 class="col text-center mt-5">{{ data.city }}, {{ data.country }} <button type="button" class="btn btn-primary btn-sm" id="favorite">Favorite</button></h3>
+<div class="row mb-5 center-block">
+    <img class="center-block" src="{% static 'images/'|add:data.icon %}" height="150" width="150">
+</div>
+<div class="mt-5 container">
+
+
+    <div class="row px-5 g-2 text-center justify-content-center mt-2">
+        <div class="col-lg-3 col-md-12">
+            <h4 class="">Forecast</h4>
+            <h5 id="weather" class="p-3 border bg-white">{{ data.weather }}</h5>
+        </div>
+        <div class="col-lg-3 col-md-12">
+            <h4 class="">Temperature</h4>
+            <h5 id="weather" class="p-3 border bg-white">{{ data.temp }}</h5>
+        </div>
+        <div class="col-lg-3 col-md-12">
+            <h4 class="">Humidity</h4>
+            <h5 id="weather" class="p-3 border bg-white">{{ data.humidity}}%</h5>
+        </div>
+        <div class="col-lg-3 col-md-12">
+            <h4 class="">sunrise</h4>
+            <h5 id="weather" class="p-3 border bg-white">{{ data.sunrise }}</h5>
+        </div>
+    </div>
+
+
+    <div class="row px-5 g-2 text-center justify-content-center mt-2">
+        <div class="col-lg-3 col-md-12">
+            <h4 class="">wind</h4>
+            <h5 id="weather" class="p-3 border bg-white">{{ data.wind_speed }} mph {{ data.wind_dir }}</h5>
+        </div>
+        <div class="col-lg-3 col-md-12">
+            <h4 class="">feels-like</h4>
+            <h5 id="weather" class="p-3 border bg-white">{{ data.feels_like }}</h5>
+        </div>
+        <div class="col-lg-3 col-md-12">
+            <h4 class="">cloudiness</h4>
+            <h5 id="weather" class="p-3 border bg-white">{{ data.cloud }}%</h5>
+        </div>
+        <div class="col-lg-3 col-md-12">
+            <h4 class="">sunset</h4>
+            <h5 id="weather" class="p-3 border bg-white">{{ data.sunset }}</h5>
+        </div>
+    </div>
+</div>
+
+
+    <div class="row px-5 g-2 text-center justify-content-center mt-2">
+
+        <div class="col-lg-3 col-md-12">
+            <h4 class="">pressure</h4>
+            <h5 id="weather" class="p-3 border bg-white">{{ data.pressure }} hPa</h5>
+        </div>
+        <div class="col-lg-3 col-md-12">
+            <h4 class="">visibility</h4>
+            <h5 id="weather" class="p-3 border bg-white">{{ data.visibility }} m</h5>
+        </div>
+    </div>
+</div>
+
+<script>
+    let fav = document.querySelector("#favorite");
+    console.log('id' + "{{ data.id }}" + "=" + "{{ data.id }}");
+    if (document.cookie.indexOf('id' + "{{ data.id }}" + "=" + "{{ data.id }}") > -1) {
+        fav.innerHTML = "Un-favorite";
+    } else {
+        fav.innerHTML = "Favorite";
+    }
+
+    function eraseCookie(name) {   
+        document.cookie = name + '=; Max-Age=0; path=/; domain=' + location.hostname; 
+    }
+
+    function favorite() {
+        let fav = document.querySelector("#favorite");
+        if (fav.innerHTML === "Favorite") {
+            let curr = new Date();
+            let id = "{{ data.id }}"
+            curr.setMonth( curr.getMonth() + 1);
+            document.cookie = "id" + id + "=" + id + "; expires=" + curr.toUTCString() + "; path=/";
+            fav.innerHTML = "Un-favorite"
+            console.log("success");
+        } else {
+            let curr = new Date();
+            let id = "{{ data.id }}";
+            eraseCookie('id' + "{{ data.id }}" + "=" + "{{ data.id }}");
+            fav.innerHTML = "Favorite";
+            console.log("removed");
+        }
+    }
+
+    document.querySelector("#favorite").addEventListener("click", favorite);
+
+</script>
+
+{% include "layout/footer.html" %}
