@@ -38,7 +38,7 @@
 </style>
 <h3 class="col text-center mt-5">{{ data.city }}, {{ data.country }} <button type="button" class="btn btn-primary btn-sm" id="favorite">Favorite</button></h3>
 <div class="row mb-5 center-block">
-    <img class="center-block" src="{% static data.icon %}" height="150" width="150">
+    <img class="center-block" src="{% static "layout/images/"|add:data.icon %}" height="150" width="150">
 </div>
 <div class="mt-5 container">
 

@@ -39,14 +39,14 @@
         {% for card in data %}
             <div class="col-md-6 col-lg-2">
             <div id="card" class="card align-items-center mb-2 mx-1 p-3">
-            <a href="/weather/current/?id={{card.city_id}}"><img class="card-img-top" width="50" height="50"  src="{% static card.icon %}" ></a>
+            <a href="/weather/current/?id={{card.city_id}}"><img class="card-img-top" width="50" height="50"  src="{% static "layout/images/"|add:card.icon %}" ></a>
             <div id="row" class="card-body text-center ]">
             <h6 id="row" class="card-title" style="border-top:1px solid #5b5b5b; padding-top: 10px">{{ card.city }}</h6>
             <h6 id="row" class="card-title" >{{ card.country }}</h6>
             <p id="row" style="border-top:1px solid #5b5b5b">{{ card.weather }}</p>
             <p id="row">{{ card.temp }}˚f</p>
-            <img id="row" class="card-img-top" width="25" height="25"  src="{% static 'sunrise.svg'%}" ><p>{{ card.sunrise }}</p>
-            <img id="row" class="card-img-top" width="25" height="25"  src="{% static 'sunset.svg'%}" ><p>{{ card.sunset }}</p>
+            <img id="row" class="card-img-top" width="25" height="25"  src="{% static 'layout/images/sunrise.svg'%}" ><p>{{ card.sunrise }}</p>
+            <img id="row" class="card-img-top" width="25" height="25"  src="{% static 'layout/images/sunset.svg'%}" ><p>{{ card.sunset }}</p>
             </div>
             </div> 
             </div>
