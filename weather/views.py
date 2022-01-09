@@ -5,7 +5,7 @@ import requests
 import datetime
 import os
 
-if os.path.exists('secret.py'):
+if os.path.exists('./config/secret.py'):
    # read secrets from json file
         from config.secret import *
 else:

@@ -6,7 +6,7 @@ import requests
 import datetime
 import os
 
-if os.path.exists('secret.py'):
+if os.path.exists('./config/secret.py'):
    # read secrets from json file
         from config.secret import *
 else:
@@ -38,11 +38,16 @@ def index(request):
     exists = False
     for cookie in request.COOKIES:
         if cookie[0:2] == "id":
-            exists = True
+
+            
             id = request.COOKIES[cookie]
             #print(id)
             page = f"http://api.openweathermap.org/data/2.5/weather?id={id}&appid={API_KEY}&units=imperial"
             info = requests.get(page).json()
+            if info["cod"] == "404":
+                continue
+            if info["cod"] == "429":
+                continue
             #print(info)
             sunset = datetime.datetime.fromtimestamp(info["sys"]["sunset"]).strftime("%I:%M %p")
             sunrise = datetime.datetime.fromtimestamp(info["sys"]["sunrise"]).strftime("%I:%M %p")
@@ -57,6 +62,7 @@ def index(request):
                 "sunset": sunset,
             }
             data.append(temp)
+            exists = True
     #print(exists, data)
     context = {"data":data, "exists":exists}
     if "error" in request.GET:
