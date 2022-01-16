@@ -66,7 +66,12 @@ def index(request):
     #print(exists, data)
     context = {"data":data, "exists":exists}
     if "error" in request.GET:
-        context["error"] = "Must enter a city to lookup the weather. Please try again."
+        if request.GET["error"]  == "lookup":
+            context["error"] = "Must enter a city to lookup the weather. Please try again."
+        elif request.GET["error"] == "location":
+            context["error"] = "There was a problem when trying to get your location. Please make sure you are allowing location."
+        else:
+            context["error"] = "There has been an error."
     
     return render(request, 'home/index.html', context)
 

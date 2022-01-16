@@ -78,7 +78,7 @@
             }
             window.location.href = reference;
         } else {
-            window.location.href = '/?error=true';
+            window.location.href = '/?error=lookup';
         }
     }
 
@@ -117,6 +117,7 @@
 
         function error() {
             status.textContent = 'Unable to retrieve your location';
+            window.location.href = '/?error=location';
         }
 
         if (navigator.geolocation)
