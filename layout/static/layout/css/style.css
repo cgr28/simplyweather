@@ -1,0 +1,33 @@
+.searchbar {
+    border-top: solid 2px #5b5b5b;
+    border-bottom: solid 2px #5b5b5b;
+    border-right: none;
+    border-left: solid 1px #5b5b5b;
+    background: #ebebeb;
+    color: #5b5b5b;
+}
+
+#location-bttn {
+    border-top: solid 2px #5b5b5b;
+    border-bottom: solid 2px #5b5b5b;
+    border-left: solid 2px #5b5b5b;
+    background: #ebebeb;
+    border-right: none;
+}
+
+#go {
+    border-top: solid 2px #5b5b5b;
+    border-bottom: solid 2px #5b5b5b;
+    border-right: solid 2px #5b5b5b;
+    background: #ebebeb;
+    border-left: none;
+}
+
+#mail, #github {
+    transition: 0.25s !important;
+    border-radius:50%;
+}
+
+#mail:hover, #github:hover {
+    box-shadow: 0  5px 5px  rgba(0,0,0,0.2);
+}

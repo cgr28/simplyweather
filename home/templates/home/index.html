@@ -22,14 +22,14 @@
 <div class="p-5 text-white text-center" style="background: rgb(5,121,254);background: linear-gradient(76deg, rgba(5,121,254,1) 0%, rgba(15,126,182,1) 86%, rgba(0,118,245,1) 100%);">
         <p id="error">{{ error }}</p>
         <div class="input-group mb-3" style="box-shadow: 0px 8px 24px rgba(0,0,0,.2);">
-            <button  class="btn btn-dark" type="button" id="location-bttn">
+            <button  class="btn" type="button" id="location-bttn">
                 {% comment %} <span class="spinner-border spinner-border-sm"></span> {% endcomment %}
-                Use Current Location
+                <img src="{% static 'layout/images/location.svg' %}">
             </button>
-                <input id="city" type="text" class="form-control" placeholder="City" required>
-                <input id="state" type="text" class="form-control" placeholder="State (US only)" pattern="[a-zA-Z]{2}">
-                <input id="ctry" type="text" class="form-control" placeholder="Country" pattern="[a-zA-Z]{2}">
-            <button id="go" class="btn btn-success" type="submit">Go</button>
+                <input id="city" type="text" class="form-control searchbar" placeholder="City" required>
+                <input id="state" maxLength="2" type="text" class="form-control searchbar" placeholder="State" pattern="[a-zA-Z]{2}">
+                <input id="ctry" maxLength="2" type="text" class="form-control searchbar" placeholder="Country" pattern="[a-zA-Z]{2}">
+            <button id="go" class="btn btn-success" type="submit"><img src="{% static 'layout/images/search.svg' %}"></button>
         </div>
 </div>
 
