@@ -6,8 +6,7 @@ import datetime
 import os
 
 if os.path.exists('./config/secret.py'):
-   # read secrets from json file
-        from config.secret import *
+    from config.secret import *
 else:
     API_KEY = os.environ['API_KEY']
 
