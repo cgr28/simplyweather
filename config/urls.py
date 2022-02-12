@@ -20,6 +20,7 @@ from django.conf import settings
 from django.views.static import serve
  
 handler404 = 'layout.views.handler404'
+handler500 = 'layout.views.handler500'
 
 urlpatterns = [
     url(r"^images/(?P<path>.*)$", serve, {"document_root": settings.MEDIA_ROOT}),
