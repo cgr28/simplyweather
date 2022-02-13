@@ -42,7 +42,7 @@ def index(request):
             
             id = request.COOKIES[cookie]
             #print(id)
-            page = f"http://api.openweathermap.org/data/2.5/weather?id={id}&appid={API_KEY}&units=imperial"
+            page = f"https://api.openweathermap.org/data/2.5/weather?id={id}&appid={API_KEY}&units=imperial"
             info = requests.get(page).json()
             if info["cod"] == "404":
                 continue

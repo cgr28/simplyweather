@@ -57,17 +57,17 @@ def current(request):
     if "lat" in request.GET and "long" in request.GET:
         lat = request.GET["lat"]
         long = request.GET["long"]
-        page = f"http://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={long}&appid={API_KEY}&units=imperial"
+        page = f"https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={long}&appid={API_KEY}&units=imperial"
     elif "city" in request.GET:
         city = request.GET["city"]
         if "state" in request.GET:
             state = "," + request.GET["state"]
         if "ctry" in request.GET:
             ctry = "," + request.GET["ctry"]
-        page = f"http://api.openweathermap.org/data/2.5/weather?q={city}{state}{ctry}&appid={API_KEY}&units=imperial"
+        page = f"https://api.openweathermap.org/data/2.5/weather?q={city}{state}{ctry}&appid={API_KEY}&units=imperial"
     elif "id" in request.GET:
         id = request.GET["id"]
-        page = f"http://api.openweathermap.org/data/2.5/weather?id={id}&appid={API_KEY}&units=imperial"
+        page = f"https://api.openweathermap.org/data/2.5/weather?id={id}&appid={API_KEY}&units=imperial"
     else:
         #print("here")
         raise Http404
@@ -114,17 +114,17 @@ def tri_hourly(request):
     if "lat" in request.GET and "long" in request.GET:
         lat = request.GET["lat"]
         long = request.GET["long"]
-        page = f"http://api.openweathermap.org/data/2.5/forecast?lat={lat}&lon={long}&appid={API_KEY}&units=imperial"
+        page = f"https://api.openweathermap.org/data/2.5/forecast?lat={lat}&lon={long}&appid={API_KEY}&units=imperial"
     elif "city" in request.GET:
         city = request.GET["city"]
         if "state" in request.GET:
             state = "," + request.GET["state"]
         if "ctry" in request.GET:
             ctry = "," + request.GET["ctry"]
-        page = f"http://api.openweathermap.org/data/2.5/forecast?q={city}{state}{ctry}&appid={API_KEY}&units=imperial"
+        page = f"https://api.openweathermap.org/data/2.5/forecast?q={city}{state}{ctry}&appid={API_KEY}&units=imperial"
     elif "id" in request.GET:
         id = request.GET["id"]
-        page = f"http://api.openweathermap.org/data/2.5/forecast?id={id}&appid={API_KEY}&units=imperial"
+        page = f"https://api.openweathermap.org/data/2.5/forecast?id={id}&appid={API_KEY}&units=imperial"
     else:
         raise Http404
 
