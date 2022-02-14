@@ -130,8 +130,24 @@
     }
 
 
+
+
     bttn = document.querySelector('#location-bttn');
     btt2 = document.querySelector('#go');
+    search = document.querySelectorAll(".searchbar");
+
+    for (i = 0; i < search.length; i++) {
+        search[i].addEventListener("keyup", function(event) {
+        // Number 13 is the "Enter" key on the keyboard
+        if (event.keyCode === 13) {
+            // Cancel the default action, if needed
+            event.preventDefault();
+            // Trigger the button element with a click
+            document.getElementById("go").click();
+        }
+        });
+    }
+
 
     btt2.addEventListener("click", getLocation);
     bttn.addEventListener('click', getCurrentLocation);
