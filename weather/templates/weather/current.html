@@ -10,8 +10,6 @@
   </div>
 </div>
 
-{% load static %}
-
 <style>
     #current {
         box-shadow: 0 0 10px 5px rgba(0,0,0,0.2);
@@ -100,6 +98,6 @@
     </div>
 </div>
 
-<script src="static 'layout/js/favorite.js'"></script>
+<script src="{% static 'layout/js/favorite.js' %}"></script>
 
 {% include "layout/footer.html" %}

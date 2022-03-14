@@ -1,4 +1,5 @@
 {% include "layout/nav.html" %}
+{% load static %}
 
 <Title>Trihoral Weather | Simply Weather</Title>
 
@@ -8,8 +9,6 @@
     <div class="col" id="daily"><a class="nav-link" id="daily-text" href="/weather/tri-hourly/?id={{ id }}">trihoral</a></div>
   </div>
 </div>
-
-{% load static %}
 
 <style>
     #daily {
@@ -72,6 +71,6 @@
 
 </div>
 
-<script src="static 'layout/js/favorite.js'"></script>
+<script src="{% static 'layout/js/favorite.js' %}"></script>
 
 {% include "layout/footer.html" %}
