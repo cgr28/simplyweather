@@ -2,7 +2,7 @@
 *.pyc  
 *~  
 __pycache__  
-myvenv  
+myvenv
 db.sqlite3  
 /static  
 .DS_Store 
@@ -13,3 +13,6 @@ db.sqlite3
 !*/migrations/__init__.py
 secret.py
 staticfiles
+bin
+pyvenv.cfg
+lib
