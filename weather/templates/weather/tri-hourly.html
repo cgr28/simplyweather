@@ -72,39 +72,6 @@
 
 </div>
 
-<script>
-    let fav = document.querySelector("#favorite");
-    //console.log('id' + "{{ id }}" + "=" + "{{ id }}");
-    if (document.cookie.indexOf('id' + "{{ id }}" + "=" + "{{ id }}") > -1) {
-        fav.innerHTML = "Un-favorite";
-    } else {
-        fav.innerHTML = "Favorite";
-    }
-
-    function eraseCookie(name) {   
-        document.cookie = name + "=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/;"
-    }
-
-    function favorite() {
-        let fav = document.querySelector("#favorite");
-        if (fav.innerHTML === "Favorite") {
-            let curr = new Date();
-            let id = "{{ id }}"
-            curr.setMonth( curr.getMonth() + 1);
-            document.cookie = "id" + id + "=" + id + "; expires=" + curr.toUTCString() + "; path=/";
-            fav.innerHTML = "Un-favorite"
-            console.log("success");
-        } else {
-            let curr = new Date();
-            let id = "{{ id }}";
-            eraseCookie('id' + "{{ id }}" + "=" + "{{ id }}");
-            fav.innerHTML = "Favorite";
-            console.log("removed");
-        }
-    }
-
-    document.querySelector("#favorite").addEventListener("click", favorite);
-
-</script>
+<script src="static 'layout/js/favorite.js'"></script>
 
 {% include "layout/footer.html" %}
