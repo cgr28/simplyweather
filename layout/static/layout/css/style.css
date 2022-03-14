@@ -31,3 +31,16 @@
 #mail:hover, #github:hover {
     box-shadow: 0  5px 5px  rgba(0,0,0,0.2);
 }
+
+#favorite {
+    background-color: rgb(5,121,254);
+    border: solid 0.5pt rgb(2, 82, 173);
+    color: #F5F5F5;
+    text-decoration: none;
+    box-shadow: 0px 2px 5px rgba(0,0,0,0.2);
+}
+
+#favorite:hover {
+    background-color: rgb(2, 82, 173);
+    border: solid 0.5pt rgb(5,121,254);
+}
