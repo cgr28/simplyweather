@@ -48,6 +48,8 @@ def index(request):
                 continue
             if info["cod"] == "429":
                 continue
+            if info["cod"] == "400":
+                continue
             #print(info)
             sunset = datetime.datetime.fromtimestamp(info["sys"]["sunset"]).strftime("%I:%M %p")
             sunrise = datetime.datetime.fromtimestamp(info["sys"]["sunrise"]).strftime("%I:%M %p")
