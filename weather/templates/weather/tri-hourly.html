@@ -73,10 +73,10 @@
 
 <script>
     let fav = document.querySelector("#favorite");
-    // console.log('id' + "{{ data.id }}" + "=" + "{{ data.id }}");
+    // console.log('id' + "{{ id }}" + "=" + "{{ id }}");
 
     // if cookie exists already exist start as "unfavorite" else start as favorite
-    if (document.cookie.indexOf('id' + "{{ data.id }}" + "=" + "{{ data.id }}") > -1) {
+    if (document.cookie.indexOf('id' + "{{ id }}" + "=" + "{{ id }}") > -1) {
         fav.innerHTML = "Un-favorite";
     } else {
         fav.innerHTML = "Favorite";
@@ -91,15 +91,15 @@
         // favorite city
         if (fav.innerHTML === "Favorite") {
             let curr = new Date();
-            let id = "{{ data.id }}" // city id
+            let id = "{{ id }}" // city id
             curr.setMonth( curr.getMonth() + 1);
             document.cookie = "id" + id + "=" + id + "; expires=" + curr.toUTCString() + "; path=/"; // create cookie
             fav.innerHTML = "Un-favorite"
             // console.log("success");
         } else { //unfavorite city
             let curr = new Date();
-            let id = "{{ data.id }}"; // city id
-            eraseCookie('id' + "{{ data.id }}" + "=" + "{{ data.id }}");
+            let id = "{{ id }}"; // city id
+            eraseCookie('id' + "{{ id }}" + "=" + "{{ id }}");
             fav.innerHTML = "Favorite";
             // console.log("removed");
         }
