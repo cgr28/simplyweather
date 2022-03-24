@@ -1,72 +1,61 @@
-from django.http.response import JsonResponse
 from django.shortcuts import render
 from django.template import loader
 from django.http import HttpResponse
+from layout.logic import icons, error_check, get_page, format_time
+from layout.Location import Current
 import requests
-import datetime
 import os
 
+# retrieves api key
 if os.path.exists('./config/secret.py'):
    # read secrets from json file
         from config.secret import *
 else:
     API_KEY = os.environ['API_KEY']
 
-icons = {
-    "01d": "clear-day.svg",
-    "01n": "clear-night.svg",
-    "02d": "few-cloud-day.svg",
-    "02n": "few-cloud-night.svg",
-    "03d": "scattered-clouds.svg",
-    "03n": "scattered-clouds.svg",
-    "04d": "broken-clouds.svg",
-    "04n": "broken-clouds.svg",
-    "09d": "shower-rain.svg",
-    "09n": "shower-rain.svg",
-    "10d": "rain-day.svg",
-    "10n": "rain-night.svg",
-    "11d": "thunderstorm.svg",
-    "11n": "thunderstorm.svg",
-    "13d": "snow.svg",
-    "13n": "snow.svg",
-    "50d": "mist.svg",
-    "50n": "mist.svg",
-}
-
 def index(request):
     data = []
     exists = False
     for cookie in request.COOKIES:
         if cookie[0:2] == "id":
-
             
-            id = request.COOKIES[cookie]
-            #print(id)
-            page = f"https://api.openweathermap.org/data/2.5/weather?id={id}&appid={API_KEY}&units=imperial"
+            page = get_page(request, "weather", cookie)
+
+            if not page:
+                continue
+
             info = requests.get(page).json()
-            if info["cod"] == "404":
+
+            weather = Current(info)
+
+            cod = weather.get_cod()
+
+            err, _ = error_check(cod)
+
+            if err:
                 continue
-            if info["cod"] == "429":
-                continue
-            if info["cod"] == "400":
-                continue
+
             #print(info)
-            sunset = datetime.datetime.fromtimestamp(info["sys"]["sunset"]).strftime("%I:%M %p")
-            sunrise = datetime.datetime.fromtimestamp(info["sys"]["sunrise"]).strftime("%I:%M %p")
+            sunset = format_time(weather.get_sunset())
+            sunrise = format_time(weather.get_sunrise())
+            icon = icons[weather.get_icon()]
+
             temp = {
-                "weather": info["weather"][0]["main"],
-                "temp": info["main"]["temp"],
-                "city": info["name"],
-                "country": info["sys"]["country"],
-                "city_id": info["id"],
-                "icon": icons[info["weather"][0]["icon"]],
+                "weather": weather.get_weather(),
+                "temp": weather.get_temp(),
+                "city": weather.get_city(),
+                "country": weather.get_country(),
+                "city_id": weather.get_id(),
+                "icon": icon,
                 "sunrise": sunrise,
                 "sunset": sunset,
             }
+
             data.append(temp)
             exists = True
     #print(exists, data)
     context = {"data":data, "exists":exists}
+
     if "error" in request.GET:
         if request.GET["error"]  == "lookup":
             context["error"] = "Must enter a city to lookup the weather. Please try again."
